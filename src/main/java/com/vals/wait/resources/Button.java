@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.vals.wait.GameOver;
+import com.vals.wait.GameOverScreen;
 import com.vals.wait.Main;
 import com.vals.wait.SelectGameScreen;
 import com.vals.wait.snake.Snake;

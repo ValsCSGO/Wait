@@ -10,14 +10,16 @@ public class Player {
 	private int headLocX;
 	private int headLocY;
 	private int currentDirection;
-	public final int LOWEST_LENGTH = 5;
 	public int currentLength;
 	public int points;
+	public int lastDirection;
 
 	public Player(int headx, int heady, int currentdirection) {
 		this.headLocX = headx;
 		this.headLocY = heady;
 		this.currentDirection = currentdirection;
+		xLocs.clear();
+		yLocs.clear();
 	}
 
 	public int getHeadLocX() {
@@ -44,37 +46,52 @@ public class Player {
 		currentDirection = curr;
 	}
 
+	public int getLastDirection() {
+		return lastDirection;
+	}
+
+	public void setLastDirection(int last) {
+		lastDirection = last;
+	}
+
 	public void move() {
-		for(int i = 1; i < xLocs.size(); i++) {
+		addLoc(headLocX, headLocY);
+		if(xLocs.size() != 0) {
+			if(lastDirection == -currentDirection) {
+				SnakePlayScreen.gameOver();
+				return;
+			}
+		}
+		switch(currentDirection) {
+		case -2:
+			headLocY -= 1;
+			break;
+		case -1:
+			headLocX -= 1;
+			break;
+		case 2:
+			headLocY += 1;
+			break;
+		case 1:
+			headLocX += 1;
+			break;
+		}
+		if(headLocX > SnakePlayScreen.boardSizeX - 1) {
+			headLocX = 0;
+		} else if(headLocY > SnakePlayScreen.boardSizeY - 1) {
+			headLocY = 0;
+		} else if(headLocX < 0) {
+			headLocX = SnakePlayScreen.boardSizeX - 1;
+		} else if(headLocY < 0) {
+			headLocY = SnakePlayScreen.boardSizeY - 1;
+		}
+		for(int i = 0; i < xLocs.size(); i++) {
 			int x = xLocs.get(i);
 			int y = yLocs.get(i);
 			if(headLocX == x && headLocY == y) {
 				SnakePlayScreen.gameOver();
 			}
 		}
-		addLoc(headLocX, headLocY);
-		switch(currentDirection) {
-		case 0:
-			headLocY -= 1;
-			break;
-		case 1:
-			headLocX -= 1;
-			break;
-		case 2:
-			headLocY += 1;
-			break;
-		case 3:
-			headLocX += 1;
-			break;
-		}
-		if(headLocX > SnakePlayScreen.boardSizeX) 
-			headLocX = 0;
-		if(headLocY > SnakePlayScreen.boardSizeY) 
-			headLocY = 0;
-		if(headLocX < 0) 
-			headLocX = SnakePlayScreen.boardSizeX;
-		if(headLocY < 0) 
-			headLocY = SnakePlayScreen.boardSizeY;
 	}
 
 	public void addLoc(int x, int y) {

@@ -3,6 +3,7 @@ package com.vals.wait;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vals.wait.ballz.Ballz;
 import com.vals.wait.resources.Button;
 import com.vals.wait.resources.Resources;
 import com.vals.wait.snake.Snake;
@@ -51,10 +52,10 @@ public class SelectGameScreen extends GuiScreen {
 				if((b.getX() <= mouseX) && (b.getY() <= mouseY) && (b.getHeight() + b.getY() > mouseY) && (b.getWidth() + b.getX() > mouseX)) {
 					switch(b.getId()) {
 					case 1:
-						GameOver.render = true;
+						Ballz.render = true;
 						break;
 					case 2:
-						GameOver.render = true;
+						GameOverScreen.render = true;
 						break;
 					case 3:
 						Snake.render = true;

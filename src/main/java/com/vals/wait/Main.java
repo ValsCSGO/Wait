@@ -1,5 +1,7 @@
 package com.vals.wait;
 
+import com.vals.wait.ballz.Ballz;
+import com.vals.wait.ballz.BallzPlayScreen;
 import com.vals.wait.command.WaitCommand;
 import com.vals.wait.snake.Snake;
 import com.vals.wait.snake.SnakePlayScreen;
@@ -34,10 +36,13 @@ public class Main {
     @SubscribeEvent
     public void render(RenderGameOverlayEvent event) {
     	SelectGameScreen.renderScreen();
-    	GameOver.renderScreen();
+    	GameOverScreen.renderScreen();
     	
     	Snake.renderScreen();
     	SnakePlayScreen.renderScreen();
+    	
+    	Ballz.renderScreen();
+    	BallzPlayScreen.renderScreen();
     }
     
     @SubscribeEvent
@@ -49,5 +54,13 @@ public class Main {
     		}
     		gameTicks++;
     	}
+    }
+    
+    public static Game getGame() {
+    	return lastPlayedGame;
+    }
+    
+    public static void setGame(Game g) {
+    	lastPlayedGame = g;
     }
 }

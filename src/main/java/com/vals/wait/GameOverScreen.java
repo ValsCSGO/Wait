@@ -1,7 +1,9 @@
 package com.vals.wait;
 
+import com.vals.wait.ballz.BallzPlayScreen;
 import com.vals.wait.resources.Button;
 import com.vals.wait.resources.Resources;
+import com.vals.wait.snake.SnakePlayScreen;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -9,13 +11,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GameOver extends GuiScreen {
+public class GameOverScreen extends GuiScreen {
 	public static boolean render = false;
+	private static String score;
 	
 	public static void renderScreen() {
 		if(render) {
 			render = false;
-			Main.mc.displayGuiScreen(new GameOver());
+			Main.mc.displayGuiScreen(new GameOverScreen());
 		}
 	}
 	
@@ -38,9 +41,14 @@ public class GameOver extends GuiScreen {
 		double right = width + buttonWidth + 20;
 		Resources.drawRect(left, halfHeight - 85, right, halfHeight + 35, 0xf0000000);
 		
-		Resources.renderTextAtCenter("Game Over", (int)left, (int)right, (int)halfHeight - 40, 0xFF5555, true);
+		Resources.renderTextAtCenter("Game Over", (int)left, (int)right, (int)halfHeight - 60, 0xFF5555, true);
+		Resources.renderTextAtCenter(score, (int)left, (int)right, (int)halfHeight - 30, 0xFFFFFF, true);
 		Button.drawButtons("gameover");
 		super.drawScreen(x, y, ticks);
+	}
+	
+	public static void setScore(String newscore) {
+		score = newscore;
 	}
 	
 	@Override
@@ -50,7 +58,17 @@ public class GameOver extends GuiScreen {
 				if((b.getX() <= mouseX) && (b.getY() <= mouseY) && (b.getHeight() + b.getY() > mouseY) && (b.getWidth() + b.getX() > mouseX)) {
 					switch(b.getId()) {
 					case 1:
-						SelectGameScreen.render = true;
+						switch(Main.getGame()) {
+						case SNAKE:
+							SnakePlayScreen.render = true;
+							break;
+						case MINESWEEPER:
+							//TODO add minesweeper
+							break;
+						case BALLZ:
+							BallzPlayScreen.render = true;
+							break;
+						}
 						break;
 					case 2:
 						Main.mc.displayGuiScreen(null);

@@ -1,10 +1,7 @@
-package com.vals.wait.snake;
+package com.vals.wait.resources;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.vals.wait.resources.Button;
-import com.vals.wait.resources.Resources;
 
 public class Tile {
 	
@@ -15,25 +12,33 @@ public class Tile {
 	private double bottomBorder;
 	private int color;
 	private Type type;
+	private int num;
 	
-	public Tile(double x, double y, double size, Type type) {
+	public Tile(double x, double y, double size, Type type, int number) {
 		this.leftBorder = x * size + 2;
 		this.topBorder = y * size + 2;
 		this.rightBorder = ((x * size) + size) - 1;
 		this.bottomBorder = ((y * size) + size) + 1;
 		this.type = type;
-		if(type == type.FOOD) {
-			this.color = 0xFFFF0000;
+		this.num = number;
+		this.color = getFromType(type);
+	}
+	
+	public int getFromType(Type t) {
+		if(type == type.SNAKEFOOD) {
+			return 0xFFFF0000;
 		} else if (type == type.SNAKEHEAD){
-			this.color = 0xEE00FF00;
+			return 0xDD00FF00;
 		}else if(type == type.SNAKEBODY) {
-			this.color = 0xFF00FF00;
+			return 0xFF00FF00;
 		} else if (type == type.SPACE){
-			this.color = 0x51111111;
+			return 0x51222222;
+		} else {
+			return 0;
 		}
 	}
 	
-	public static void drawTiles(int xOffset, int yOffset) {
+	public static void drawTiles(double xOffset, double yOffset) {
 		for(Tile t : tiles) {
 			t.draw(xOffset, yOffset);
 //			System.out.println(t.leftBorder + ", " +
@@ -43,7 +48,9 @@ public class Tile {
 		}
 	}
 	
-	private void draw(int xOffset, int yOffset) {
+	private void draw(double xOffset, double yOffset) {
 		Resources.drawRect(xOffset + leftBorder, yOffset + topBorder, xOffset + rightBorder, yOffset + bottomBorder, color);
+		if(num != -1)
+			Resources.renderTextAtCenter(num + "", (int)(xOffset + leftBorder), (int)(xOffset + rightBorder), (int)(((bottomBorder + topBorder) / 2) - 5 + yOffset), color, false);
 	}
 }
