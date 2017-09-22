@@ -72,12 +72,9 @@ public class Button {
 		for(Button button : b) {
 			button.buttonId = totalButtons + 1;
 			totalButtons++;
+			
 			List<Button> but;
-			if(buttons.get(button.group) != null) {
-				but = buttons.get(button.group);
-			} else {
-				but = new ArrayList<Button>();
-			}
+			but = buttons.get(button.group) != null ? buttons.get(button.group) : new ArrayList<Button>();
 			but.add(button);
 			buttons.put(button.group, but);
 		}
@@ -94,7 +91,4 @@ public class Button {
 		Resources.drawRect(buttonX, buttonY, buttonX + width, buttonY + height, backgroundColor);
 		Resources.renderTextAtCenter(text, (int)buttonX, (int)buttonX + (int)width, (int)buttonMiddle, color, shadow);
 	}
-
-	//System.out.println("Name: " + text + ", Group: " + group + ", ID: " + buttonId);
-
 }

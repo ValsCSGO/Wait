@@ -10,6 +10,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class Resources {
 
+	public static void drawCircle(double x, double y, double radius, int color) {
+		
+	}
+	
 	public static void drawRect(double left, double top, double right, double bottom, int color) {
 		if (left < right) {
 			double i = left;

@@ -25,13 +25,13 @@ public class Tile {
 	}
 	
 	public int getFromType(Type t) {
-		if(type == type.SNAKEFOOD) {
+		if(type == t.SNAKEFOOD) {
 			return 0xFFFF0000;
-		} else if (type == type.SNAKEHEAD){
+		} else if (type == t.SNAKEHEAD){
 			return 0xDD00FF00;
-		}else if(type == type.SNAKEBODY) {
+		}else if(type == t.SNAKEBODY) {
 			return 0xFF00FF00;
-		} else if (type == type.SPACE){
+		} else if (type == t.SPACE){
 			return 0x51222222;
 		} else {
 			return 0;
