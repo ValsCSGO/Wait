@@ -41,6 +41,7 @@ public class SelectGameScreen extends GuiScreen {
 				new Button("Quit", "games", halfWidth, halfHeight + 45, buttonHeight, buttonWidth, 0xFF5555, backgroundColor, true));
 
 		Resources.drawRect(halfWidth - 10, halfHeight - 55, halfWidth + buttonWidth + 10, halfHeight + 75, 0xf0000000);
+		Resources.drawCircle(100, 100, 25, 0xFFFFFFFF);
 		Button.drawButtons("games");
 		super.drawScreen(x, y, ticks);
 	}

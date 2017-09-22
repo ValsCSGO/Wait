@@ -1,5 +1,9 @@
 package com.vals.wait.resources;
 
+import java.awt.Graphics;
+
+import org.lwjgl.opengl.GL11;
+
 import com.vals.wait.Main;
 
 import net.minecraft.client.Minecraft;
@@ -10,10 +14,47 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class Resources {
 
-	public static void drawCircle(double x, double y, double radius, int color) {
-		
-	}
+	public static void DrawCircleOutline(float x, float y, float r) { 
+        double theta = 2 * Math.PI / 360; 
+        double cos = Math.cos(theta);
+        double sin = Math.sin(theta);
+        
+        double xHolder;
+        double unitCircleX = 1; 
+        double unitCircleY = 0; 
+
+        GL11.glBegin(GL11.GL_LINE_LOOP); 
+        for(int i = 0; i < 360; i++) { 
+            GL11.glVertex2d(unitCircleX * r + x, unitCircleY * r + y);
+            xHolder = unitCircleX;
+            unitCircleX = cos * unitCircleX - sin * unitCircleY;
+            unitCircleY = sin * xHolder + cos * unitCircleY;
+        } 
+        GL11.glEnd(); 
+    }
 	
+	public static void drawCircle(float x, float y, float radius, int color) {
+		float alpha = (float)(color >> 24 & 255) / 255.0F;
+		float red = (float)(color >> 16 & 255) / 255.0F;
+		float green = (float)(color >> 8 & 255) / 255.0F;
+		float blue = (float)(color & 255) / 255.0F;
+		
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glColor4f(red, green, blue, alpha);
+		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		GL11.glVertex2f(x, y);
+		for (float i = 0.0f; i < 360.0f; i += 0.2) {
+			float x2 = (float) (x + Math.sin(i) * radius);
+			float y2 = (float) (y + Math.cos(i) * radius);
+			GL11.glVertex2f(x2, y2);
+		}
+		GL11.glEnd();
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
+	}
+
 	public static void drawRect(double left, double top, double right, double bottom, int color) {
 		if (left < right) {
 			double i = left;
@@ -58,6 +99,4 @@ public class Resources {
 			Main.mc.fontRendererObj.drawString(text, truecenter, height, color);
 		}
 	}
-
-	
 }
